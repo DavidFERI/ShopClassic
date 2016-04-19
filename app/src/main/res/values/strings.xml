@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Shopping Center</string>
+    <string name="action_settings">Nastavitve</string>
+    <string name="title_activity_activity_second">Beležka oblačil</string>
+    <string name="title_activity_activity__katalog">Katalog oblačil</string>
+    <string name="title_activity_mapa">Map</string>
+    <string name="title_activity_activity_list">Shopping Center</string>
+    <string name="title_activity_activity_list_oblacil">Oblacila</string>
+    <string name="title_activity_activity__dodaj__novo">Dodajanje artikla</string>
+    <string name="title_text">Google Sign-In\nQuickstart</string>
+
+    <!-- Sign-in status messages -->
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="signed_out">Signed out</string>
+    <string name="loading">Loading…</string>
+
+    <!-- Google Play Services error for Toast -->
+
+    <!-- Button labels -->
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+
+    <!-- Content Description for images -->
+    <string name="desc_google_icon">Google Logo</string>
+
+</resources>

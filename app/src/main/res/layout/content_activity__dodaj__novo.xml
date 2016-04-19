@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.feri.david.com.shoppingcenter.Activity_Dodaj_Novo"
+    tools:showIn="@layout/activity_activity__dodaj__novo">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:foregroundGravity="center_vertical|center_horizontal"
+            android:gravity="center_vertical"
+            android:measureWithLargestChild="false">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Prodajalna:"
+                android:id="@+id/textView4"
+                android:gravity="center_vertical|center_horizontal"
+                android:foregroundGravity="center_vertical|center_horizontal"
+                android:layout_gravity="center_vertical|right" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                android:layout_gravity="center_vertical"
+                android:spinnerMode="dropdown" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Ime Kompleta"
+                android:id="@+id/textView9"
+                android:layout_marginTop="25dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:measureWithLargestChild="false">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Naziv"
+                android:ems="10"
+                android:id="@+id/Komplet_naziv"
+                android:layout_span="58"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="#456bff"
+                android:password="false"
+                android:phoneNumber="false"
+                android:singleLine="false"
+                android:autoText="false"
+                android:layout_weight="10"
+                android:allowUndo="false" />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Osnovni podatki:"
+                android:id="@+id/textView11"
+                android:layout_column="0"
+                android:layout_marginTop="5dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Številka:"
+                android:id="@+id/textView12"
+                android:layout_column="0"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="M"
+                android:ems="5"
+                android:id="@+id/Komplet_st"
+                android:layout_column="0"
+                android:layout_marginLeft="30dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Skupna cena:"
+                android:id="@+id/textView14"
+                android:layout_column="0"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="2dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="00.00"
+                android:ems="5"
+                android:inputType="numberDecimal"
+                android:id="@+id/Komplet_cena"
+                android:layout_column="0"
+                android:layout_marginLeft="30dp" />
+        </TableRow>
+
+
+
+
+    </TableLayout>
+
+</RelativeLayout>

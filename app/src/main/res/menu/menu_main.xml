@@ -1,0 +1,47 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.feri.david.com.shoppingcenter.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_save"
+        android:orderInCategory="100"
+        android:title="Priprni v beležko"
+        android:onClick="ShowMenuOption"/>
+
+    <item
+        android:id="@+id/Nova"
+        android:orderInCategory="100"
+        android:title="Beležka"
+        android:onClick="Odpri_Novo" />
+
+    <item
+        android:id="@+id/Trgovine"
+        android:orderInCategory="100"
+        android:title="Trgovine"
+        android:onClick="Trgovine" />
+
+    <item
+        android:id="@+id/Oblacila"
+        android:orderInCategory="100"
+        android:title="Oblacila"
+        android:onClick="Kompleti" />
+
+    <item
+        android:id="@+id/Maps"
+        android:orderInCategory="100"
+        android:title="Zemljevid"
+        android:onClick="Zemljevid" />
+    <item
+        android:id="@+id/Izbrisi"
+        android:orderInCategory="100"
+        android:title="X"
+        android:icon="@android:drawable/ic_menu_delete"
+        app:showAsAction="always"
+        android:onClick="Kos"/>
+
+</menu>

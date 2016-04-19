@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_id": "silken-airfoil-124815",
+    "project_number": "415567204917",
+    "name": "My Project"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415567204917:android:9c547b5ed466b580",
+        "client_id": "android:com.android.vending",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.android.vending",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415567204917-ts4emg268k9s2l5i3qj0nacdou9vkpsk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.vending",
+            "certificate_hash": "7BF77D1F5328D8DE2FA48DBBADA132D1270F774D"
+          }
+        },
+        {
+          "client_id": "415567204917-7fsqriei9111kg3lag7qgi1929e37rkm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415567204917:android:601e4a19780d7877",
+        "client_id": "android:com.feri.david.com.shoppingcenter",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.feri.david.com.shoppingcenter",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415567204917-7fsqriei9111kg3lag7qgi1929e37rkm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
