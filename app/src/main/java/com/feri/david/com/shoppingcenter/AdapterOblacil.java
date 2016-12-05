@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.DataAll;
@@ -16,13 +17,14 @@ import com.example.Prodajalna;
  * Created by DavidPC on 13.3.2016.
  */
 public class AdapterOblacil extends RecyclerView.Adapter<AdapterOblacil.ViewHolder>{
-    public static final String PARAMETER_POSITION_1 = "POSITION_TRGOVINA";
+    public static final String PARAMETER_POSITION = "POSITION_TRGOVINA";
     private DataAll mDataset;
     Activity ac;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtHeader;
         public TextView txtFooter;
+        public LinearLayout lin;
         public ImageView iv;
 
         public ViewHolder(View v) {
@@ -30,6 +32,7 @@ public class AdapterOblacil extends RecyclerView.Adapter<AdapterOblacil.ViewHold
             txtHeader = (TextView) v.findViewById(R.id.firstLine);
             txtFooter = (TextView) v.findViewById(R.id.secondLine);
             iv = (ImageView)v.findViewById(R.id.icon);
+            lin = (LinearLayout) v.findViewById(R.id.vsi);
         }
     }
 
@@ -57,14 +60,18 @@ public class AdapterOblacil extends RecyclerView.Adapter<AdapterOblacil.ViewHold
         if (DataAll.picture(trenutni.getNaziv()) == 1)
             holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.zara));
         if (DataAll.picture(trenutni.getNaziv()) == 2)
-            holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.other));
+            holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.hm));
         if (DataAll.picture(trenutni.getNaziv()) == 3)
+            holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.ca));
+        if (DataAll.picture(trenutni.getNaziv()) == 4)
+            holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.tak));
+        if (DataAll.picture(trenutni.getNaziv()) == 5)
             holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.no_image));
-        holder.txtHeader.setOnClickListener(new View.OnClickListener() {
+        holder.lin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent dva = new Intent(ac, ActivityListOblacil.class);
-                dva.putExtra(PARAMETER_POSITION_1,position);
+                dva.putExtra(PARAMETER_POSITION,position);
                 ac.startActivity(dva);
                 System.out.println(name);
             }
@@ -75,7 +82,7 @@ public class AdapterOblacil extends RecyclerView.Adapter<AdapterOblacil.ViewHold
 
     @Override
     public int getItemCount() {
-        return mDataset.getKom().size();
+        return mDataset.getProd().size();
     }
 
 }

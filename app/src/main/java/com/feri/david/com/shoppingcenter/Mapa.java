@@ -35,7 +35,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         all = DataAll.getScenarij1Data();
         Intent intent = getIntent();
         if (intent!=null) {
-            indeks = intent.getIntExtra(AdapterOblacil.PARAMETER_POSITION_1,0); //id
+            indeks = intent.getIntExtra(AdapterOblacil.PARAMETER_POSITION,0); //id
             System.out.println("test indeks: " + indeks);
         }
         pro = all.getProd(indeks);

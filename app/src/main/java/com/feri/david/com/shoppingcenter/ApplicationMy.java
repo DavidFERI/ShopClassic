@@ -1,6 +1,8 @@
 package com.feri.david.com.shoppingcenter;
 
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import com.example.DataAll;
@@ -13,6 +15,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -23,6 +26,8 @@ import java.io.PrintWriter;
 public class ApplicationMy extends Application {
     private static final String DATA_MAP = "ShoppingCenterMapa";
     private static final String FILE_NAME = "Center.json";
+    private static final String DATA_SLIKE ="ShoppingCenter_slike";
+    private static final String FILE_NAME_SLIKA ="ShoppingCenter.png";
     private DataAll all;
     private GoogleSignInAccount acct;
 
@@ -44,6 +49,7 @@ public class ApplicationMy extends Application {
         super.onCreate();
         if (!load())
             all = DataAll.getScenarij1Data(); //testni prvi podatki
+
 //        all = DataAll.getScenarij1Data(); //testni pripravljeni podatki
     }
 
@@ -72,6 +78,63 @@ public class ApplicationMy extends Application {
         if (Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
             return true;
+        }
+        return false;
+    }
+
+    public boolean save_slika(Bitmap slika)
+    {
+        System.out.println("Shranjujem...");
+        String file_name=all.st_kompletov()+"ID.png";
+        return save_slika(slika, file_name);
+    }
+
+    public Bitmap load_slika(String filename)
+    {
+        if(isExternalStorageReadable())
+        {
+            String path=this.getExternalFilesDir(DATA_SLIKE)+"/"+filename;
+            Bitmap image= BitmapFactory.decodeFile(path);
+            return image;
+        }
+        System.out.println("ExternalStorageAvailable is not avaliable");
+        return null;
+    }
+
+    public Bitmap getThumbnailBitmap(String path, int thumbnailSize) {
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, bounds);
+        if ((bounds.outWidth == -1) || (bounds.outHeight == -1)) {
+            return null;
+        }
+        int originalSize = (bounds.outHeight > bounds.outWidth) ? bounds.outHeight
+                : bounds.outWidth;
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = originalSize / thumbnailSize;
+        return BitmapFactory.decodeFile(path, opts);
+    }
+
+    private boolean save_slika(Bitmap image, String filename)
+    {
+        if(isExternalStorageWritable())
+        {
+            File file= new File(this.getExternalFilesDir(DATA_SLIKE),""+filename);
+            FileOutputStream fout=null;
+            try
+            {
+                fout=new FileOutputStream(file);
+                image.compress(Bitmap.CompressFormat.PNG, 100, fout);
+            }
+            catch(FileNotFoundException e)
+            {
+                e.printStackTrace();
+                System.out.println("ERROR SAVE! FILE NOT FOUND");
+            }
+        }
+        else
+        {
+            System.out.println(this.getClass().getCanonicalName()+"NOT Writable");
         }
         return false;
     }

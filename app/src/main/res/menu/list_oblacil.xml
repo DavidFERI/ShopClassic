@@ -6,5 +6,6 @@
         android:orderInCategory="100"
         app:showAsAction="always"
         android:title="Dodaj novo"
+        android:icon="@android:drawable/ic_menu_add"
         android:onClick="ShowMenuOption"/>
 </menu>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEEEEE"
     android:fitsSystemWindows="true"
     tools:context="com.feri.david.com.shoppingcenter.ActivityListOblacil">
 
@@ -30,6 +31,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="#5555FF"
-        android:src="@android:drawable/ic_menu_info_details" />
+        android:src="@drawable/board" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -2,10 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.feri.david.com.shoppingcenter"
+        renderscriptTargetApi 20
+        renderscriptSupportModeEnabled true
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
@@ -28,6 +30,10 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.code.gson:gson:2.6'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
+    compile 'com.nantaphop:hoverTouchView:0.1'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.android.support:support-v4:23.2.0'
 }
+
 
 apply plugin: 'com.google.gms.google-services'

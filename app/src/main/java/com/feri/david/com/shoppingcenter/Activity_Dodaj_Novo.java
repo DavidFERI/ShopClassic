@@ -1,11 +1,19 @@
 package com.feri.david.com.shoppingcenter;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +21,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,15 +38,25 @@ import com.example.Sako;
 import com.example.Srajca;
 import com.example.Telovnik;
 
+import java.io.File;
+
 public class Activity_Dodaj_Novo extends AppCompatActivity {
     private String Trg[];
+    private String Stevilka_st[];
     private ApplicationMy app;
     private int a=0;
     private int pozicija=0;
+    private int pozicija_st=0;
     private Komplet_Elegant kom;
+    private ImageView slikaj_se;
     private EditText Komplet_naziv1;
-    private EditText Stevilka;
+    private EditText Cena;
     private Integer indeks;
+    private Bitmap imageBitmap;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +71,15 @@ public class Activity_Dodaj_Novo extends AppCompatActivity {
         for(int i=0; i<a; i++){
             Trg[i] =app.getAll().getProd().get(i).getNaziv();
         }
+        Stevilka_st = new String[8];
+        Stevilka_st[0] = "XS";
+        Stevilka_st[1] = "S";
+        Stevilka_st[2] = "M";
+        Stevilka_st[3] = "L";
+        Stevilka_st[4] = "XL";
+        Stevilka_st[5] = "XXL";
+        Stevilka_st[6] = "XXXL";
+        Stevilka_st[7] = "XXXXL";
 
         Intent intent = getIntent();
         if (intent!=null) {
@@ -59,20 +88,36 @@ public class Activity_Dodaj_Novo extends AppCompatActivity {
         }
 
         Komplet_naziv1 = (EditText) findViewById(R.id.Komplet_naziv);
-        Stevilka = (EditText) findViewById(R.id.Komplet_st);
+        Cena = (EditText) findViewById(R.id.Komplet_cena);
+        slikaj_se = (ImageView) findViewById(R.id.slikica_suit);
         // Selection of the spinner
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner stevilke_spinner = (Spinner) findViewById(R.id.spinnerNovi);
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, Trg);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerArrayAdapter);
+
+        ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, Stevilka_st);
+        spinnerArrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        stevilke_spinner.setAdapter(spinnerArrayAdapter1);
+
+        ImageView img = (ImageView) findViewById(R.id.slikica_suit);
+        img.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(Activity_Dodaj_Novo.this, "Odpiram kamero!", Toast.LENGTH_SHORT).show();
+                dispatchTakePictureIntent();
+            }
+        });
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(Activity_Dodaj_Novo.this);
+                final AlertDialog.Builder builder1 = new AlertDialog.Builder(Activity_Dodaj_Novo.this);
                 builder1.setMessage("Ali res želite dodati artikel?");
                 builder1.setCancelable(true);
 
@@ -82,19 +127,74 @@ public class Activity_Dodaj_Novo extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 Spinner spinner = (Spinner)findViewById(R.id.spinner);
                                 pozicija = spinner.getSelectedItemPosition();
-                                kom = new Komplet_Elegant(Komplet_naziv1.getText().toString(), "Moski",
-                                        new Hlace("Klasik - Zelene hlace", "Moski", "34/32", "Slim Fit", "Crna", 20.99),
-                                        new Sako("Klasik - Zeleni Sako", "Moski",Stevilka.getText().toString()  ,"Slim Fit", "Crna", 110.99),
-                                        new Obutev("Klasik - elegantni zeleni cevlji", "Elegant", "Moski", 43, "Crna", "Usnje", 23.99),
-                                        new Srajca("Klasik - Rumena srajca", "Moski", "M", "Slim Fit", "Bela", 25.99),
-                                        new Telovnik("Klasik - Zeleni telovnik", "Moski", "M", "Slim Fit", "Crna", 79.99),
-                                        new Nogavice("Klasik - Zelene nogavice", "Moski", 43, "Crna", "Svila", 15.99),
-                                        new Pas("Klasik - Rumeni pas", "Moski", "95-105", "Crna", 11.99));
+
+                                Spinner spinner_st = (Spinner)findViewById(R.id.spinnerNovi);
+                                pozicija_st = spinner_st.getSelectedItemPosition();
+
+                                if(imageBitmap!=null)
+                                {
+                                    kom = new Komplet_Elegant(Komplet_naziv1.getText().toString(), "Moski",
+                                            new Hlace("Klasik - Zelene hlace", "Moski", "34/32", "Slim Fit", "Crna", 20.99),
+                                            new Sako("Klasik - Zeleni Sako", "Moski", Stevilka_st[pozicija_st]  ,"Slim Fit", "Crna", Double.parseDouble(Cena.getText().toString())),
+                                            new Obutev("Klasik - elegantni zeleni cevlji", "Elegant", "Moski", 43, "Crna", "Usnje", 23.99),
+                                            new Srajca("Klasik - Rumena srajca", "Moski", "M", "Slim Fit", "Bela", 25.99),
+                                            new Telovnik("Klasik - Zeleni telovnik", "Moski", "M", "Slim Fit", "Crna", 79.99),
+                                            new Nogavice("Klasik - Zelene nogavice", "Moski", 43, "Crna", "Svila", 15.99),
+                                            new Pas("Klasik - Rumeni pas", "Moski", "95-105", "Crna", 11.99), 0.0,
+                                            app.getExternalFilesDir("ShoppingCenter_slike")+"/"+app.getAll().vel()+"ID.png");
+                                    System.out.println(app.getExternalFilesDir("ShoppingCenter_slike")+"/"+app.getAll().vel()+"ID.png");
+                                    app.getAll().poveci();
+                                }
+                                else
+                                {
+                                    kom = new Komplet_Elegant(Komplet_naziv1.getText().toString(), "Moski",
+                                            new Hlace("Klasik - Zelene hlace", "Moski", "34/32", "Slim Fit", "Crna", 20.99),
+                                            new Sako("Klasik - Zeleni Sako", "Moski", Stevilka_st[pozicija_st]  ,"Slim Fit", "Crna", Double.parseDouble(Cena.getText().toString())),
+                                            new Obutev("Klasik - elegantni zeleni cevlji", "Elegant", "Moski", 43, "Crna", "Usnje", 23.99),
+                                            new Srajca("Klasik - Rumena srajca", "Moski", "M", "Slim Fit", "Bela", 25.99),
+                                            new Telovnik("Klasik - Zeleni telovnik", "Moski", "M", "Slim Fit", "Crna", 79.99),
+                                            new Nogavice("Klasik - Zelene nogavice", "Moski", 43, "Crna", "Svila", 15.99),
+                                            new Pas("Klasik - Rumeni pas", "Moski", "95-105", "Crna", 11.99), 0.0);
+                                }
                                 app.getAll().getProd().get(pozicija).dodaj_novega(kom);
                                 app.save();
                                 Snackbar.make(view, "Komplet " + Komplet_naziv1.getText().toString() + " je bil shranjen!", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                                 dialog.cancel();
+
+
+                                Intent notificationIntent = new Intent(getApplicationContext(), ActivityListOblacil.class);
+
+                                notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                                PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, 0);
+
+                                Intent notificationIntent1 = new Intent(getApplicationContext(), ActivityList.class);
+                                PendingIntent intent1 = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent1, 0);
+
+                                // Build notification
+                                // Actions are just fake
+                                Notification noti = new Notification.Builder(Activity_Dodaj_Novo.this)
+                                        .setContentTitle("Hvala za uporabo!")
+                                        .setContentText("Komplet " + kom.getNaziv() + " je bil dodan v bazo!").setSmallIcon(R.drawable.druga)
+                                        .setContentIntent(intent)
+                                        .addAction(R.drawable.trgovina, "Preglej trgovine", intent1)
+                                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.jtnotification)).build();
+
+                                // hide the notification after its selected
+                                noti.sound = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.jtnotification);
+                                noti.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+                                noti.defaults |= Notification.DEFAULT_VIBRATE;
+                                noti.ledARGB = 0xFF33ffff;
+                                noti.ledOnMS = 100;
+                                noti.ledOffMS = 100;
+
+                                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+
+                                notificationManager.notify(0, noti);
+
+
                                 NavUtils.navigateUpFromSameTask(Activity_Dodaj_Novo.this);
                             }
                         });
@@ -113,6 +213,30 @@ public class Activity_Dodaj_Novo extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+
+        if(requestCode==REQUEST_IMAGE_CAPTURE && resultCode==RESULT_OK)
+        {
+            imageBitmap=app.getThumbnailBitmap(app.getExternalFilesDir("ShoppingCenter_slike")+"/"+app.getAll().vel()+"ID.png",100);
+            slikaj_se.setImageBitmap(imageBitmap);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String file_name=+app.getAll().vel()+"ID.png";
+        File file= new File(app.getExternalFilesDir("ShoppingCenter_slike"),""+file_name);
+        Uri urisave= Uri.fromFile(file);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,urisave);
+        if(takePictureIntent.resolveActivity(getPackageManager())!=null)
+        {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
 }

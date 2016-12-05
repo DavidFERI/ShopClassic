@@ -1,1 +1,1 @@
-include ':app', ':myshoppingcenter'
+include ':app', ':myshoppingcenter', ':wekaSTRIPPED'

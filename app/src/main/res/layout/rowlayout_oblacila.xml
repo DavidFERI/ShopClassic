@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="6dip"
-    android:layout_width="wrap_content"
+    android:id="@+id/vse"
+    android:background="@drawable/border"
+    android:paddingTop="12dip"
+    android:layout_margin="3dip"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
@@ -17,6 +20,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="6dip"
+            android:layout_marginLeft="5dp"
             android:contentDescription="TODO"
             android:src="@drawable/cold"
             android:layout_weight="100"
@@ -77,7 +81,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
@@ -96,7 +100,7 @@
         <TextView
             android:id="@+id/fourthline"
             android:layout_width="match_parent"
-            android:layout_height="67dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_alignWithParentIfMissing="true"
@@ -105,7 +109,9 @@
             android:text="Example application"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="@android:color/holo_red_dark"
+            android:singleLine="true"
+            android:inputType="numberDecimal" />
 
 
     </LinearLayout>

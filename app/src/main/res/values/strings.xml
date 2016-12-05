@@ -23,4 +23,10 @@
     <!-- Content Description for images -->
     <string name="desc_google_icon">Google Logo</string>
 
+    <string name="title_activity_my_camera">MyCameraActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_belezka__podrobnosti">Belezka_Podrobnosti</string>
+    <string name="title_activity_predlagani">Predlagani</string>
+
 </resources>

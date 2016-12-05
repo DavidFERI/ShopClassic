@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="#EEEEEE"
     tools:context="com.feri.david.com.shoppingcenter.ActivitySecond">
 
     <android.support.design.widget.AppBarLayout
@@ -30,6 +31,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="#5555FF"
-        android:src="@android:drawable/ic_menu_add" />
+        android:src="@drawable/kosek" />
 
 </android.support.design.widget.CoordinatorLayout>

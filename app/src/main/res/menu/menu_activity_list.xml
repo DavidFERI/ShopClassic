@@ -5,9 +5,23 @@
     tools:context=".ActivityList">
 
     <item
+        android:id="@+id/Prof"
+        android:orderInCategory="100"
+        android:icon="@drawable/pro"
+        android:title="Profil"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/Predlagani"
+        android:orderInCategory="100"
+        android:icon="@drawable/recomented"
+        android:title="Predlagani"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"
-        android:icon="@android:drawable/ic_lock_power_off"
+        android:icon="@drawable/odjava"
         android:title="Logout"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

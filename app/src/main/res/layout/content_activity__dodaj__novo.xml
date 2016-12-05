@@ -13,11 +13,36 @@
     tools:showIn="@layout/activity_activity__dodaj__novo">
 
 
+    <ImageView
+        android:layout_alignParentTop="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/slikica_suit"
+        android:gravity="center_vertical|center_horizontal"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:src="@drawable/suit"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical|center_horizontal" />
+
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:layout_marginTop="90dp" />
+
+        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -42,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/spinner"
                 android:layout_gravity="center_vertical"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dialog" />
         </TableRow>
 
         <TableRow
@@ -95,31 +120,61 @@
                 android:layout_column="0"
                 android:layout_marginTop="5dp" />
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:layout_marginTop="15dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:foregroundGravity="center_vertical|center_horizontal"
+            android:gravity="center_vertical"
+            android:measureWithLargestChild="false">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Številka:"
                 android:id="@+id/textView12"
                 android:layout_column="0"
-                android:layout_marginTop="3dp"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="-88dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:foregroundGravity="center_vertical|center_horizontal"
+                android:layout_gravity="center_vertical|right" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerNovi"
+                android:spinnerMode="dropdown"
+                android:layout_column="0"
+                android:gravity="center_vertical|center_horizontal"
+                android:foregroundGravity="center_vertical|center_horizontal"
+                android:layout_gravity="center_vertical|right" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="M"
-                android:ems="5"
-                android:id="@+id/Komplet_st"
-                android:layout_column="0"
-                android:layout_marginLeft="30dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:layout_marginTop="15dp" />
+
         </TableRow>
 
         <TableRow
@@ -147,9 +202,8 @@
                 android:id="@+id/Komplet_cena"
                 android:layout_column="0"
                 android:layout_marginLeft="30dp" />
+
         </TableRow>
-
-
 
 
     </TableLayout>

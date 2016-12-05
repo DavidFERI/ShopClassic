@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+
 import com.example.DataAll;
 import com.example.Hlace;
 import com.example.Komplet_Elegant;
@@ -33,6 +34,8 @@ import com.example.Srajca;
 import com.example.Telovnik;
 
 import java.io.InputStream;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivityList extends AppCompatActivity {
     private static final String TAG = "ActivityList" ;
@@ -52,8 +55,8 @@ public class ActivityList extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Seznam vseh trgovin in njihovi naslovi", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent dva = new Intent(ActivityList.this, ActivitySecond.class);
+                startActivity(dva);
             }
         });
 
@@ -77,7 +80,7 @@ public class ActivityList extends AppCompatActivity {
 
         }else{
             Log.d(TAG,personPhoto.toString());
-            new DownloadImageTask((ImageView) findViewById(R.id.profile_picture))
+            new DownloadImageTask((CircleImageView) findViewById(R.id.obprijavi))
                     .execute(app.getAcct().getPhotoUrl().toString());
         }
     }
@@ -133,6 +136,17 @@ public class ActivityList extends AppCompatActivity {
             alert11.show();
             return true;
         }
+
+        if (id == R.id.Prof) {
+            Intent dva = new Intent(ActivityList.this, Profil.class);
+            startActivity(dva);
+        }
+
+        if (id == R.id.Predlagani) {
+            Intent dva = new Intent(ActivityList.this, Activity_Predlagani.class);
+            startActivity(dva);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

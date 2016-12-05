@@ -5,7 +5,10 @@
     <color name="colorAccent">#6666FF</color>
     <color name="red">#FF0000</color>
     <color name="lightblue">#5555FF</color>
+    <color name="siva">#F9F9FD</color>
 
     <color name="blue_grey_700">#455A64</color>
     <color name="blue_grey_900">#263238</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

@@ -29,20 +29,19 @@ public class ActivityListOblacil extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         app = (ApplicationMy) getApplication();
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (intent!=null) {
-            indeks = intent.getIntExtra(AdapterOblacil.PARAMETER_POSITION_1,0); //id
+            indeks = intent.getIntExtra(AdapterOblacil.PARAMETER_POSITION,0); //id
             //System.out.println(indeks);
         }
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Seznam oblacil ponudnika: " + app.getAll().getProd().get(indeks).getNaziv(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent dva = new Intent(ActivityListOblacil.this, ActivitySecond.class);
+                startActivity(dva);
             }
         });
 
@@ -52,7 +51,6 @@ public class ActivityListOblacil extends AppCompatActivity {
         // LINEARNO
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         mAdapter = new AdapterKompletov(app, indeks, this);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -76,7 +74,7 @@ public class ActivityListOblacil extends AppCompatActivity {
         super.onResume();
         Intent intent = getIntent();
         if (intent!=null) {
-            indeks = intent.getIntExtra(AdapterOblacil.PARAMETER_POSITION_1,0); //id
+            indeks = intent.getIntExtra(AdapterOblacil.PARAMETER_POSITION,0); //id
             System.out.println(indeks);
         }
         app = (ApplicationMy) getApplication();
