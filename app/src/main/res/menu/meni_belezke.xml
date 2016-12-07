@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.feri.david.com.shoppingcenter.Belezka_Podrobnosti">
+
+    <item
+        android:id="@+id/popravi"
+        android:orderInCategory="100"
+        android:title="X"
+        android:icon="@android:drawable/ic_menu_save"
+        app:showAsAction="always"
+        android:onClick="Shrani"/>
+
+    <item
+        android:id="@+id/Izbrisi"
+        android:orderInCategory="100"
+        android:title="X"
+        android:icon="@android:drawable/ic_menu_delete"
+        app:showAsAction="always"
+        android:onClick="Kos"/>
+</menu>

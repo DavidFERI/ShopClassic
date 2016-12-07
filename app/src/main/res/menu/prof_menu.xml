@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.feri.david.com.shoppingcenter.Profil">
+
+    <item
+        android:id="@+id/popravi"
+        android:orderInCategory="100"
+        android:title="X"
+        android:icon="@drawable/refresh"
+        app:showAsAction="always"
+        android:onClick="Resetiraj"/>
+</menu>

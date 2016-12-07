@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayout1"
+    android:background="@drawable/roundborder">
+
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView1"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="PM is here"
+        android:textStyle="bold"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:textColor="@android:color/black">
+    </TextView>
+
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:src="@drawable/refresh"
+        android:layout_below="@+id/textView1"
+        android:layout_margin="5dip"
+        android:id="@+id/imageView1">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="This is the demo of Custom Toast Notification"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_below="@+id/imageView1">
+    </TextView>
+
+    <TextView
+        android:id="@+id/nimaveze"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text=""
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_below="@+id/textView2">
+    </TextView>
+
+</RelativeLayout>
