@@ -3,20 +3,28 @@ package com.feri.david.com.shoppingcenter;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,22 +45,34 @@ import com.example.Prodajalna;
 import com.example.Sako;
 import com.example.Srajca;
 import com.example.Telovnik;
+import com.google.android.gms.ads.mediation.customevent.CustomEventNativeListener;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 public class Activity_Dodaj_Novo extends AppCompatActivity {
     private String Trg[];
     private String Stevilka_st[];
     private ApplicationMy app;
+    private String razdalja;
+    private String odlocitev;
+    private String Cena_weka;
+    private Double razdalja_v_dub;
     private int a=0;
     private int pozicija=0;
     private int pozicija_st=0;
     private Komplet_Elegant kom;
+    private String Ime_Trgovine;
     private ImageView slikaj_se;
     private EditText Komplet_naziv1;
     private EditText Cena;
     private Integer indeks;
     private Bitmap imageBitmap;
+    static List<Address> geocodeMatches = null;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
@@ -158,6 +178,126 @@ public class Activity_Dodaj_Novo extends AppCompatActivity {
                                 }
                                 app.getAll().getProd().get(pozicija).dodaj_novega(kom);
                                 app.save();
+
+
+                                try {
+                                    //racunanje razdalje od tukaj kje si do trgovin
+                                    if (ActivityCompat.checkSelfPermission(Activity_Dodaj_Novo.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Activity_Dodaj_Novo.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                        Toast.makeText(Activity_Dodaj_Novo.this, "Prvo vklopite LOCATION ACCESS v nastavitvah.", Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
+                                    LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                    //trenutna pozicija
+                                    double longitude1, latitude1;
+                                    if (location != null) {
+                                        longitude1 = location.getLongitude();
+                                        latitude1 = location.getLatitude();
+                                    }else{
+                                        longitude1 = 15.648791;
+                                        latitude1 = 46.558412;
+                                    }
+                                    //pozicija trgovine
+                                    geocodeMatches = new Geocoder(Activity_Dodaj_Novo.this.getBaseContext()).getFromLocationName(app.getAll().getProd().get(pozicija).getLokacija().getHisna() + app.getAll().getProd().get(pozicija).getLokacija().getNaslov() + app.getAll().getProd().get(pozicija).getLokacija().getPostna_st(), 1);
+                                    razdalja_v_dub = distance(latitude1,longitude1);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                //Diskretizacije
+                                if(razdalja_v_dub < 19.5){
+                                    razdalja = "'\\'" + "(-inf-19.5]" + "\\" +  "\'" + "\'";
+                                    //System.out.println(razdalja);
+                                }else{
+                                    if(razdalja_v_dub >=19.5 && razdalja_v_dub < 42.5 ){
+                                        razdalja = "'\\'" + "(19.5-42.5]" + "\\" +  "\'" + "\'";
+                                    }else{
+                                        if(razdalja_v_dub >=42.5 && razdalja_v_dub < 125 ){
+                                            razdalja = "'\\'" + "(42.5-125]" + "\\" +  "\'" + "\'";
+                                        }else{
+                                            if(razdalja_v_dub >=125 && razdalja_v_dub < 302.5 ){
+                                                razdalja = "'\\'" + "(125-302.5]" + "\\" +  "\'" + "\'";
+                                            }else{
+                                                if(razdalja_v_dub >=302.5){
+                                                    razdalja = "'\\'" + "(302.5-inf)" + "\\" +  "\'" + "\'";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                Double cena = kom.getSak().getCena();
+                                if(cena < 19.5){
+                                    Cena_weka = "'\\'" + "(-inf-19.5]" + "\\" +  "\'" + "\'";
+                                    //System.out.println(razdalja);
+                                }else{
+                                    if(cena >= 19.5 && cena < 42.5){
+                                        Cena_weka = "'\\'" + "(19.5-42.5]" + "\\" +  "\'" + "\'";
+                                    }else{
+                                        if(cena >= 42.5 && cena < 85){
+                                            Cena_weka = "'\\'" + "(42.5-85]" + "\\" +  "\'" + "\'";
+                                        }else{
+                                            if(cena >= 85 && cena < 275){
+                                                Cena_weka = "'\\'" + "(85-275]" + "\\" +  "\'" + "\'";
+                                            }else{
+                                                if(cena >= 275){
+                                                    Cena_weka = "'\\'" + "(275-inf)" + "\\" +  "\'" + "\'";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if(razdalja_v_dub < 19.5){
+                                    odlocitev = "Prfektno";
+                                    //System.out.println(razdalja);
+                                }else{
+                                    if(razdalja_v_dub >=19.5 && razdalja_v_dub < 42.5 ){
+                                        odlocitev = "Odlicno";
+                                    }else{
+                                        if(razdalja_v_dub >=42.5 && razdalja_v_dub < 125 ){
+                                            odlocitev = "Dobro";
+                                        }else{
+                                            if(razdalja_v_dub >=125 && razdalja_v_dub < 302.5 ){
+                                                odlocitev = "Slabo";
+                                            }else{
+                                                if(razdalja_v_dub >=302.5){
+                                                    odlocitev = "Najslabse";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                String ime_tr = app.getAll().getProd().get(pozicija).getNaziv();
+                                if(ime_tr.equals("ZARA")){
+                                    Ime_Trgovine = "Zara";
+                                }else{
+                                    if(ime_tr.equals("C&A")){
+                                        Ime_Trgovine = "CA";
+                                    }else{
+                                        if(ime_tr.equals("H&M")){
+                                            Ime_Trgovine = "HM";
+                                        }else{
+                                            if(ime_tr.equals("Takko")){
+                                                Ime_Trgovine = "Tacco";
+                                            }else{
+                                                Ime_Trgovine = app.getAll().getProd().get(pozicija).getNaziv();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                //Za dodajanje v veko
+                                try(FileWriter fw = new FileWriter("/storage/sdcard1/bluetooth/misc/" + "Primerki_Najnovejse.txt", true);
+                                    BufferedWriter bw = new BufferedWriter(fw);
+                                    PrintWriter out = new PrintWriter(bw))
+                                {
+                                    out.println(Ime_Trgovine + ","+kom.getSak().getVelikost()+","+Cena_weka+"," + "'\\'" + "(0.5-2.5]" + "\\" +  "\'" + "\'" + ",Da,"+razdalja+"," + odlocitev);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
                                 Snackbar.make(view, "Komplet " + Komplet_naziv1.getText().toString() + " je bil shranjen!", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                                 dialog.cancel();
@@ -237,6 +377,39 @@ public class Activity_Dodaj_Novo extends AppCompatActivity {
         {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    public static double distance(double lat2, double lon2) {
+        double latitude;
+        double longitude;
+        double distance;
+
+        if (geocodeMatches != null) {
+            latitude = geocodeMatches.get(0).getLatitude();
+            longitude = geocodeMatches.get(0).getLongitude();
+            double lat1 = latitude;
+            double lon1 = longitude;
+
+            //System.out.println("Zarino: " + String.valueOf(lat1) + "    " + String.valueOf(lon1));
+            //System.out.println("Mojo: " + String.valueOf(lat2) + "    " + String.valueOf(lon2));
+            Location locationA = new Location("point A");
+
+            locationA.setLatitude(lat1);
+            locationA.setLongitude(lon1);
+
+            Location locationB = new Location("point B");
+
+            locationB.setLatitude(lat2);
+            locationB.setLongitude(lon2);
+
+            float distance1 = locationA.distanceTo(locationB)/1000;
+            distance = (double) distance1;
+            //System.out.println(distance);
+
+        }else{
+            distance = 80000;
+        }
+        return distance;
     }
 
 }

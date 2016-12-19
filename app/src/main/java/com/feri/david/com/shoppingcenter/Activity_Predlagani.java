@@ -61,7 +61,7 @@ public class Activity_Predlagani extends AppCompatActivity {
                 }*/
 
                     String besedilo = "";
-                    File myFile = new File( "/storage/sdcard1/bluetooth/misc/" + "Primerki.txt");
+                    File myFile = new File( "/storage/sdcard1/bluetooth/misc/" + "Primerki_Najnovejse.txt");
                     BufferedReader datafile = readDataFile(myFile.getPath());
 
                     Instances data = new Instances(datafile);

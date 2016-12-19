@@ -24,8 +24,8 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
     DataAll all;
     Prodajalna pro;
 
-    double latitude;
-    double longitude;
+    static double latitude;
+    static double longitude;
     private Integer indeks = 0;
 
     @Override
@@ -78,11 +78,11 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-            LatLng sydney = new LatLng(latitude, longitude);
-            mMap.addMarker(new MarkerOptions().position(sydney).title(pro.getNaziv()));
-            LatLng sydney1 = new LatLng(latitude, longitude);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney1));
-            mMap.animateCamera( CameraUpdateFactory.zoomTo( 14.0f ) );
+        LatLng sydney = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(sydney).title(pro.getNaziv()));
+        LatLng sydney1 = new LatLng(latitude, longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney1));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14.0f));
 
     }
 }
