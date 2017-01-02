@@ -23,6 +23,13 @@ import java.io.PrintWriter;
 /**
  * Created by DavidPC on 16.3.2016.
  */
+
+
+/*
+TEDEN 24.12.2016-2.1.2017
+-Nic naredil zaradi bozicno-novoletnih pocitnic 2017
+*/
+
 public class ApplicationMy extends Application {
     private static final String DATA_MAP = "ShoppingCenterMapa";
     private static final String FILE_NAME = "Center.json";
