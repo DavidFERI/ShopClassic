@@ -143,7 +143,7 @@ public class ActivityList extends AppCompatActivity {
         }
 
         if (id == R.id.Predlagani) {
-            Intent dva = new Intent(ActivityList.this, Activity_Predlagani.class);
+            Intent dva = new Intent(ActivityList.this, Activity_Predlagani_PoClass.class);
             startActivity(dva);
         }
 

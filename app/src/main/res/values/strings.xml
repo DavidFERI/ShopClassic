@@ -28,5 +28,9 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_belezka__podrobnosti">Belezka_Podrobnosti</string>
     <string name="title_activity_predlagani">Predlagani</string>
+    <string name="title_activity__predlagani__po_class">Activity_Predlagani_PoClass</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>
