@@ -108,6 +108,12 @@
             android:label="Predlagani kompleti"
             android:parentActivityName=".ActivityList"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity_Predlagani_Podrobnosti"
+            android:label="Podrobnosti"
+            android:parentActivityName=".Activity_Predlagani_PoClass"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

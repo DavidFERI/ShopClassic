@@ -22,8 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Belezka;
 import com.example.DataAll;
 import com.example.PredlaganiKompleti;
+import com.example.Sako;
 
 import java.io.File;
 
@@ -118,7 +120,7 @@ public class AdapterPredlaganih extends RecyclerView.Adapter<AdapterPredlaganih.
             @Override//popravi
             public void onClick() {
                 super.onClick();
-                Intent dva = new Intent(ac, Belezka_Podrobnosti.class);
+                Intent dva = new Intent(ac, Activity_Predlagani_Podrobnosti.class);
                 dva.putExtra(PARAMETER_POSITION_1,position1);;
                 ac.startActivity(dva);
                 System.out.println(name);
@@ -133,7 +135,7 @@ public class AdapterPredlaganih extends RecyclerView.Adapter<AdapterPredlaganih.
             @Override
             public void onClick() {
                 super.onClick();
-                Intent dva = new Intent(ac, Belezka_Podrobnosti.class);
+                Intent dva = new Intent(ac, Activity_Predlagani_Podrobnosti.class);
                 dva.putExtra(PARAMETER_POSITION_1,position1);;
                 ac.startActivity(dva);
                 System.out.println(name);
@@ -145,11 +147,17 @@ public class AdapterPredlaganih extends RecyclerView.Adapter<AdapterPredlaganih.
                     Toast.makeText(ac, "Double", Toast.LENGTH_SHORT).show();
                 }*/
 
-            /*@Override
+            @Override
             public void onLongClick() {
                 super.onLongClick();
-                Toast.makeText(ac, "Long click!", Toast.LENGTH_SHORT).show();
-            }*/
+                if(trenutni.getSlika_uri() == null){
+                    app.getAll().dodaj(new Belezka(trenutni.getNaziv(),trenutni.getSpol(),new Sako("Klasik - sako", "Moski", "M" ,"Slim Fit", "Crna", trenutni.getSak().getCena()),app.getAll().getPredlag().get(position1).getPro()));
+                }else{
+                    app.getAll().dodaj(new Belezka(trenutni.getNaziv(),trenutni.getSpol(),new Sako("Klasik - sako", "Moski", "M" ,"Slim Fit", "Crna", trenutni.getSak().getCena()),app.getAll().getPredlag().get(position1).getPro(), trenutni.getSlika_uri()));
+                }
+                app.save();
+                Toast.makeText(ac, trenutni.getNaziv() + " je bil shranjen v beležko!", Toast.LENGTH_SHORT).show();
+            }
 
                 /*@Override
                 public void onSwipeUp() {

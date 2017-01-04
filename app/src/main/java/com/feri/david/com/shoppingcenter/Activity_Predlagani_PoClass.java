@@ -65,6 +65,45 @@ public class Activity_Predlagani_PoClass extends AppCompatActivity
             }
         });
 
+        app.getAll().izprazni_predlagane();
+        for(int i=0; i<app.getAll().Vel_Prod();i++){
+            try {
+                //racunanje razdalje od tukaj kje si do trgovin
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Prvo vklopite LOCATION ACCESS v nastavitvah.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                //trenutna pozicija
+                double longitude1, latitude1;
+                if (location != null) {
+                    longitude1 = location.getLongitude();
+                    latitude1 = location.getLatitude();
+                }else{
+                    longitude1 = 15.648791;
+                    latitude1 = 46.558412;
+                }
+                //pozicija trgovine
+                geocodeMatches = new Geocoder(this.getBaseContext()).getFromLocationName(app.getAll().getProd().get(i).getLokacija().getHisna() + app.getAll().getProd().get(i).getLokacija().getNaslov() + app.getAll().getProd().get(i).getLokacija().getPostna_st(), 1);
+                razdalja_v_dub = distance(latitude1,longitude1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            for(int j=0; j<app.getAll().Velikost_Kompletov_V_Trg(i);j++) {
+                Komplet_Elegant trenutni = app.getAll().getProd(i).Dobi_Komplet(j);
+                if (trenutni.getSak().getCena() < 125 && razdalja_v_dub < 125) {
+                    if (trenutni.getSlika_uri() == null) {
+                        app.getAll().dodaj(new PredlaganiKompleti(trenutni.getNaziv(), trenutni.getSpol(), new Sako("Klasik - sako", "Moski", "M", "Slim Fit", "Crna", trenutni.getSak().getCena()), app.getAll().getProd(i)));
+                    } else {
+                        app.getAll().dodaj(new PredlaganiKompleti(trenutni.getNaziv(), trenutni.getSpol(), new Sako("Klasik - sako", "Moski", "M", "Slim Fit", "Crna", trenutni.getSak().getCena()), app.getAll().getProd(i), trenutni.getSlika_uri()));
+                    }
+                }
+            }
+        }
+        app.save();
+
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
@@ -143,44 +182,6 @@ public class Activity_Predlagani_PoClass extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        app.getAll().izprazni_predlagane();
-        for(int i=0; i<app.getAll().Vel_Prod();i++){
-            try {
-                //racunanje razdalje od tukaj kje si do trgovin
-                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Prvo vklopite LOCATION ACCESS v nastavitvah.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                //trenutna pozicija
-                double longitude1, latitude1;
-                if (location != null) {
-                    longitude1 = location.getLongitude();
-                    latitude1 = location.getLatitude();
-                }else{
-                    longitude1 = 15.648791;
-                    latitude1 = 46.558412;
-                }
-                //pozicija trgovine
-                geocodeMatches = new Geocoder(this.getBaseContext()).getFromLocationName(app.getAll().getProd().get(i).getLokacija().getHisna() + app.getAll().getProd().get(i).getLokacija().getNaslov() + app.getAll().getProd().get(i).getLokacija().getPostna_st(), 1);
-                razdalja_v_dub = distance(latitude1,longitude1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            for(int j=0; j<app.getAll().Velikost_Kompletov_V_Trg(i);j++) {
-                Komplet_Elegant trenutni = app.getAll().getProd(i).Dobi_Komplet(j);
-                if (trenutni.getSak().getCena() < 125 && razdalja_v_dub < 125) {
-                    if (trenutni.getSlika_uri() == null) {
-                        app.getAll().dodaj(new PredlaganiKompleti(trenutni.getNaziv(), trenutni.getSpol(), new Sako("Klasik - sako", "Moski", "M", "Slim Fit", "Crna", trenutni.getSak().getCena()), app.getAll().getProd(i)));
-                    } else {
-                        app.getAll().dodaj(new PredlaganiKompleti(trenutni.getNaziv(), trenutni.getSpol(), new Sako("Klasik - sako", "Moski", "M", "Slim Fit", "Crna", trenutni.getSak().getCena()), app.getAll().getProd(i), trenutni.getSlika_uri()));
-                    }
-                }
-            }
-        }
-        app.save();
         super.onResume();
         mAdapter.notifyDataSetChanged();
     }
