@@ -282,7 +282,15 @@ public class Activity_Dodaj_Novo extends AppCompatActivity {
                                             if(ime_tr.equals("Takko")){
                                                 Ime_Trgovine = "Tacco";
                                             }else{
-                                                Ime_Trgovine = app.getAll().getProd().get(pozicija).getNaziv();
+                                                if(ime_tr.equals("New Yorker")){
+                                                    Ime_Trgovine = "NewYorker";
+                                                }else{
+                                                    if(ime_tr.equals("Hugo Boss")){
+                                                        Ime_Trgovine = "HugoBoss";
+                                                    }else{
+                                                        Ime_Trgovine = app.getAll().getProd().get(pozicija).getNaziv();
+                                                    }
+                                                }
                                             }
                                         }
                                     }

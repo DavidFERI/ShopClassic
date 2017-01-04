@@ -41,6 +41,8 @@ import static android.view.View.*;
 
 /**
  * Created by DavidPC on 16.3.2016.
+ *
+ * ADAPTER ZA OBLACILA POSAMEZNE TRGOVINE
  */
 public class AdapterKompletov extends RecyclerView.Adapter<AdapterKompletov.ViewHolder> {
     public static final String PARAMETER_POSITION_1 = "POSITION_KOMPLET";

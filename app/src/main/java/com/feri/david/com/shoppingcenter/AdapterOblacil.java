@@ -15,6 +15,8 @@ import com.example.Prodajalna;
 
 /**
  * Created by DavidPC on 13.3.2016.
+ *
+ * ADAPTER ZA TRGOVINE
  */
 public class AdapterOblacil extends RecyclerView.Adapter<AdapterOblacil.ViewHolder>{
     public static final String PARAMETER_POSITION = "POSITION_TRGOVINA";
@@ -66,6 +68,14 @@ public class AdapterOblacil extends RecyclerView.Adapter<AdapterOblacil.ViewHold
         if (DataAll.picture(trenutni.getNaziv()) == 4)
             holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.tak));
         if (DataAll.picture(trenutni.getNaziv()) == 5)
+            holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.newyork));
+        if (DataAll.picture(trenutni.getNaziv()) == 6)
+            holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.peek));
+        if (DataAll.picture(trenutni.getNaziv()) == 7)
+            holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.hugoboss));
+        if (DataAll.picture(trenutni.getNaziv()) == 8)
+            holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.manas));
+        if (DataAll.picture(trenutni.getNaziv()) == 9)
             holder.iv.setImageDrawable(this.  ac.getDrawable(R.drawable.no_image));
         holder.lin.setOnClickListener(new View.OnClickListener() {
             @Override
