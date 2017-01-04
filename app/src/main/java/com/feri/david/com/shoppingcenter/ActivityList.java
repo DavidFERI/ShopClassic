@@ -16,11 +16,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.DataAll;
@@ -33,6 +38,7 @@ import com.example.Sako;
 import com.example.Srajca;
 import com.example.Telovnik;
 
+import java.io.File;
 import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -143,8 +149,20 @@ public class ActivityList extends AppCompatActivity {
         }
 
         if (id == R.id.Predlagani) {
-            Intent dva = new Intent(ActivityList.this, Activity_Predlagani_PoClass.class);
-            startActivity(dva);
+                LayoutInflater inflater = this.getLayoutInflater();
+                View layout = inflater.inflate(R.layout.belezka_insta,
+                        (ViewGroup) this.findViewById(R.id.relativeLayout1));
+                TextView text = (TextView) layout.findViewById(R.id.textView1);
+                TextView text1 = (TextView) layout.findViewById(R.id.textView2);
+                text.setText("Računam razdaljo med Vami in trgovinami!");
+                text1.setText("Prosim počakajte!");
+                Toast toast = new Toast(this);
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
+                Intent dva = new Intent(ActivityList.this, Activity_Predlagani_PoClass.class);
+                startActivity(dva);
         }
 
 
