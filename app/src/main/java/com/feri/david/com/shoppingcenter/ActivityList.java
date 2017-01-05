@@ -75,6 +75,7 @@ public class ActivityList extends AppCompatActivity {
 
         mAdapter = new AdapterOblacil(app.getAll(), this);
         mRecyclerView.setAdapter(mAdapter);
+
         setUserData();
     }
 

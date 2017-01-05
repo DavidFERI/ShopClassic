@@ -168,6 +168,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="Naziv"
+                    android:focusable="false"
+                    android:editable="false"
                     android:ems="10"
                     android:id="@+id/Komplet_naziv"
                     android:layout_span="58"

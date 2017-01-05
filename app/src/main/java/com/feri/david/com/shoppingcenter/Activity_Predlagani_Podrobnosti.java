@@ -65,48 +65,6 @@ public class Activity_Predlagani_Podrobnosti extends AppCompatActivity {
         });
     }
 
-    public void Kos(MenuItem item) {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(Activity_Predlagani_Podrobnosti.this);
-        builder1.setMessage("Ali res želite izbrisati artikel: " + kom.getNaziv() + "?");
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "Da",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        app.getAll().odstrani_iz_predlaganih(ind);
-                        app.save();
-                        dialog.cancel();
-                        NavUtils.navigateUpFromSameTask(Activity_Predlagani_Podrobnosti.this);
-                    }
-                });
-
-        builder1.setNegativeButton(
-                "Ne",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-    }
-
-    public void Shrani(MenuItem item) {
-        predl.setNaziv(Komplet_naziv.getText().toString());
-        app.save();
-        Snackbar.make(findViewById(R.id.podr), "Komplet je bil preimenovan!", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.meni_belezke, menu);
-        return true;
-    }
-
     private void SetProdajalna(PredlaganiKompleti p) {
         Naziv_Trgovine.setText(pro.getNaziv());
         Kraj.setText(pro.getLokacija().getPosta());

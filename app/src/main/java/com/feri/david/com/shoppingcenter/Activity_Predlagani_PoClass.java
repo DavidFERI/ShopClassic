@@ -3,16 +3,22 @@ package com.feri.david.com.shoppingcenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +28,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.Belezka;
@@ -31,7 +39,10 @@ import com.example.PredlaganiKompleti;
 import com.example.Sako;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Activity_Predlagani_PoClass extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,16 +51,21 @@ public class Activity_Predlagani_PoClass extends AppCompatActivity
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private CircleImageView slikica;
     private RelativeLayout celi;
     ApplicationMy app;
+    private TextView ime, mail;
     private Integer indeks;
     static List<Address> geocodeMatches = null;
     private Double razdalja_v_dub;
+    NavigationView navigationView;
+    View headerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__predlagani__po_class);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         app = (ApplicationMy) getApplication();
@@ -91,15 +107,19 @@ public class Activity_Predlagani_PoClass extends AppCompatActivity
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            for(int j=0; j<app.getAll().Velikost_Kompletov_V_Trg(i);j++) {
-                Komplet_Elegant trenutni = app.getAll().getProd(i).Dobi_Komplet(j);
-                if (trenutni.getSak().getCena() < 125 && razdalja_v_dub < 125) {
-                    if (trenutni.getSlika_uri() == null) {
-                        app.getAll().dodaj(new PredlaganiKompleti(trenutni.getNaziv(), trenutni.getSpol(), new Sako("Klasik - sako", "Moski", "M", "Slim Fit", "Crna", trenutni.getSak().getCena()), app.getAll().getProd(i)));
-                    } else {
-                        app.getAll().dodaj(new PredlaganiKompleti(trenutni.getNaziv(), trenutni.getSpol(), new Sako("Klasik - sako", "Moski", "M", "Slim Fit", "Crna", trenutni.getSak().getCena()), app.getAll().getProd(i), trenutni.getSlika_uri()));
+            try {
+                for(int j=0; j<app.getAll().Velikost_Kompletov_V_Trg(i);j++) {
+                    Komplet_Elegant trenutni = app.getAll().getProd(i).Dobi_Komplet(j);
+                    if (trenutni.getSak().getCena() < 125 && razdalja_v_dub < 125) {
+                        if (trenutni.getSlika_uri() == null) {
+                            app.getAll().dodaj(new PredlaganiKompleti(trenutni.getNaziv(), trenutni.getSpol(), new Sako("Klasik - sako", "Moski", "M", "Slim Fit", "Crna", trenutni.getSak().getCena()), app.getAll().getProd(i)));
+                        } else {
+                            app.getAll().dodaj(new PredlaganiKompleti(trenutni.getNaziv(), trenutni.getSpol(), new Sako("Klasik - sako", "Moski", "M", "Slim Fit", "Crna", trenutni.getSak().getCena()), app.getAll().getProd(i), trenutni.getSlika_uri()));
+                        }
                     }
                 }
+            } catch(Exception e) {
+                Toast.makeText(this, "Slab net!", Toast.LENGTH_LONG).show();
             }
         }
         app.save();
@@ -119,8 +139,20 @@ public class Activity_Predlagani_PoClass extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        headerView = navigationView.getHeaderView(0);
+
+        ime = (TextView) headerView.findViewById(R.id.user);
+        mail = (TextView) headerView.findViewById(R.id.emailj);
+        slikica = (CircleImageView) headerView.findViewById(R.id.prikaz);
+
+        try {
+            setUserData();
+        } catch (Exception e) {
+            Toast.makeText(this, "Slab net!", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -217,6 +249,45 @@ public class Activity_Predlagani_PoClass extends AppCompatActivity
             distance = 80000;
         }
         return distance;
+    }
+
+    private void setUserData() {
+        String s= app.getAcct().getEmail();
+        String ss= app.getAcct().getDisplayName();
+        Uri personPhoto = app.getAcct().getPhotoUrl();
+        if(personPhoto == null){
+
+        }else{
+            ime.setText(ss);
+            mail.setText(s);
+            new DownloadImageTask((CircleImageView) headerView.findViewById(R.id.prikaz))
+                    .execute(app.getAcct().getPhotoUrl().toString());
+        }
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
 }
