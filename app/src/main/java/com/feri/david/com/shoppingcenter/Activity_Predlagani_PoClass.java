@@ -42,6 +42,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+
+//Delujocas
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Activity_Predlagani_PoClass extends AppCompatActivity
