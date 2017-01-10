@@ -3,6 +3,7 @@ package com.feri.david.com.shoppingcenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -195,18 +196,57 @@ public class Activity_Predlagani_PoClass extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.poceni) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.blizina) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.fbshare) {
+            String urlToShare = "http://stackoverflow.com/questions/7545254";
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            // intent.putExtra(Intent.EXTRA_SUBJECT, "Foo bar"); // NB: has no effect!
+            intent.putExtra(Intent.EXTRA_TEXT, urlToShare);
 
-        } else if (id == R.id.nav_manage) {
+            // See if official Facebook app is found
+            boolean facebookAppFound = false;
+            List<ResolveInfo> matches = getPackageManager().queryIntentActivities(intent, 0);
+            for (ResolveInfo info : matches) {
+                if (info.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
+                    intent.setPackage(info.activityInfo.packageName);
+                    facebookAppFound = true;
+                    break;
+                }
+            }
 
-        } else if (id == R.id.nav_share) {
+            // As fallback, launch sharer.php in a browser
+            if (!facebookAppFound) {
+                String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + urlToShare;
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
+            }
 
-        } else if (id == R.id.nav_send) {
+            startActivity(intent);
 
+        } else if (id == R.id.messenger) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent
+                    .putExtra(Intent.EXTRA_TEXT,
+                            "Živjo!\nSi navdušenec nakupovanja in bi rad kaj prihranil?!\n\nKar pogumno klikni na to najbolj noro aplikacijo stoletja!\n\nShopping Center!!!\n\nKlikni tukaj-> ŠE PRIJE LINK BMK");
+            sendIntent.setType("text/plain");
+            sendIntent.setPackage("com.facebook.orca");
+            try {
+                startActivity(sendIntent);
+            }
+            catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this,"Prosim namesti prvo Facebook messenger!", Toast.LENGTH_LONG).show();
+            }
+        }else if (id == R.id.Oceni) {
+            try {
+                Intent  intent = new Intent(Intent.ACTION_VIEW,Uri.parse("market://details?id=com.maartendekkers.cyanapps"));
+                startActivity(intent);
+            } catch (android.content.ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.maartendekkers.cyanapps")));
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
